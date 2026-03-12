@@ -35,5 +35,7 @@ namespace VivaAguascalientesAPI.DTO.ResponseDTO
         public IList<CategoriaAtractivoModel> ListaCategorias { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public IList<EtiquetaModel> ListaEtiquetas { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public IList<MunicipioAtractivoModel> ListaMunicipios { get; set; }
     }
 }

@@ -25,6 +25,7 @@ namespace VivaAguascalientesAPI.DTO.RequestDTO
         public IList<FotosRequest> ListaFotos { get; set; }
         public IList<AtractivoCategoriaRequest> ListaCategorias { get; set; }
         public IList<EtiquetaRequest> ListaEtiquetas { get; set; }
+        public IList<MunicipioAtractivoRequest> ListaMunicipios { get; set; }
     }
 
     public class TelefonoRequest
@@ -181,6 +182,39 @@ namespace VivaAguascalientesAPI.DTO.RequestDTO
                 dataRow["id"] = (object) etiqueta.Id ?? DBNull.Value;
                 dataRow["etiqueta"] = etiqueta.Etiqueta;
                 dataRow["eliminar"] = etiqueta.Eliminar;
+                dataTable.Rows.Add(dataRow);
+            }
+
+            return dataTable;
+        }
+    }
+
+    public class MunicipioAtractivoRequest
+    {
+        public int? Id { get; set; }
+        public int IdMunicipio { get; set; }
+        public Boolean Eliminar { get; set; }
+
+        public static DataTable ToDataTable(IList<MunicipioAtractivoRequest> municipios)
+        {
+            DataTable dataTable = new DataTable("AT_ListaMunicipios");
+            var columnId = new DataColumn("id", typeof(int));
+            columnId.AllowDBNull = true;
+            dataTable.Columns.Add(columnId);
+            dataTable.Columns.Add(new DataColumn("id_municipio", typeof(int)));
+            dataTable.Columns.Add(new DataColumn("eliminar", typeof(Boolean)));
+
+            if (municipios == null)
+            {
+                return dataTable;
+            }
+
+            foreach (MunicipioAtractivoRequest municipio in municipios)
+            {
+                DataRow dataRow = dataTable.NewRow();
+                dataRow["id"] = (object)municipio.Id ?? DBNull.Value;
+                dataRow["id_municipio"] = municipio.IdMunicipio;
+                dataRow["eliminar"] = municipio.Eliminar;
                 dataTable.Rows.Add(dataRow);
             }
 

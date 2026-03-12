@@ -38,11 +38,11 @@ namespace VivaAguascalientesAPI.Controllers
         /// </summary>
         /// <param name="request">Parametros para el login</param>
         /// <response code="200">Usuario con acceso</response>
-        /// <response code="404">Usuario no encontrado</response>
+        /// <response code="401">Credenciales invalidas</response>
         [HttpPost]
         [AllowAnonymous]
         [ProducesResponseType(typeof(TokenResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult Post([FromBody] AuthRequest request)
         {
             var dataParams = new {
@@ -63,11 +63,20 @@ namespace VivaAguascalientesAPI.Controllers
 
                 if (!refresh)
                 {
-                    return NotFound();
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
+                    {
+                        Title = "No se pudo registrar el refresh token",
+                        Status = StatusCodes.Status500InternalServerError
+                    });
                 }
                 return Ok(token);
             }
-            return NotFound();
+            return Unauthorized(new ProblemDetails
+            {
+                Title = "Credenciales invalidas",
+                Detail = "El usuario o la contrasena no coinciden.",
+                Status = StatusCodes.Status401Unauthorized
+            });
         }
 
         /// <summary>

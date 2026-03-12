@@ -152,5 +152,34 @@ namespace VivaAguascalientesAPI.DAO.Model
             return result;
         }
     }
+
+    public class MunicipioAtractivoModel
+    {
+        public int Id { get; set; }
+        public int IdMunicipio { get; set; }
+        public string Municipio { get; set; }
+
+        public static IList<MunicipioAtractivoModel> GetById(int id)
+        {
+            var dataAccess = new DataAccessModelService();
+            var result =
+                dataAccess.GetListModel<MunicipioAtractivoModel, object>("[dbo].[sp_AT_ObtenMunicipiosPorAtractivo]", new { IdAtractivo = id });
+            return result;
+        }
+    }
+
+    public class MunicipioModel
+    {
+        public int Id { get; set; }
+        public string Municipio { get; set; }
+
+        public static IList<MunicipioModel> Get()
+        {
+            var dataAccess = new DataAccessModelService();
+            var result =
+                dataAccess.GetListModel<MunicipioModel, object>("[dbo].[sp_AT_ObtenMunicipios]", null);
+            return result;
+        }
+    }
     
 }

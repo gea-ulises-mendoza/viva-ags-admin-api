@@ -57,6 +57,7 @@ namespace VivaAguascalientesAPI.Controllers
             response.ListaEnlaces = RedesSocialesModel.GetById(dao.Id);
             response.ListaCategorias = CategoriaAtractivoModel.GetById(dao.Id);
             response.ListaEtiquetas = EtiquetaModel.GetById(dao.Id);
+            response.ListaMunicipios = MunicipioAtractivoModel.GetById(dao.Id);
             return Ok(response);
         }
 
@@ -90,7 +91,8 @@ namespace VivaAguascalientesAPI.Controllers
                 ListaEnlaces = EnlaceRequest.ToDataTable(request.ListaEnlaces),
                 ListaFotos = FotosRequest.ToDataTable(request.ListaFotos),
                 ListaCategorias = AtractivoCategoriaRequest.ToDataTable(request.ListaCategorias),
-                ListaEtiquetas = EtiquetaRequest.ToDataTable(request.ListaEtiquetas)
+                ListaEtiquetas = EtiquetaRequest.ToDataTable(request.ListaEtiquetas),
+                ListaMunicipios = MunicipioAtractivoRequest.ToDataTable(request.ListaMunicipios)
             });
 
             if ( result == null )
@@ -151,7 +153,8 @@ namespace VivaAguascalientesAPI.Controllers
                 ListaEnlaces = EnlaceRequest.ToDataTable(request.ListaEnlaces),
                 ListaFotos = FotosRequest.ToDataTable(request.ListaFotos),
                 ListaCategorias = AtractivoCategoriaRequest.ToDataTable(request.ListaCategorias),
-                ListaEtiquetas = EtiquetaRequest.ToDataTable(request.ListaEtiquetas)
+                ListaEtiquetas = EtiquetaRequest.ToDataTable(request.ListaEtiquetas),
+                ListaMunicipios = MunicipioAtractivoRequest.ToDataTable(request.ListaMunicipios)
             });
 
             if (result == null)
@@ -216,6 +219,19 @@ namespace VivaAguascalientesAPI.Controllers
         public ActionResult GetRedes()
         {
             var dao = RedesModel.Get();
+            return Ok(dao);
+        }
+
+        /// <summary>
+        /// Recupera el catalogo de municipios
+        /// </summary>
+        /// <response code="200">Lista de municipios</response>
+        [HttpGet]
+        [Route("municipios")]
+        [ProducesResponseType(typeof(IList<MunicipioModel>), StatusCodes.Status200OK)]
+        public ActionResult GetMunicipios()
+        {
+            var dao = MunicipioModel.Get();
             return Ok(dao);
         }
 
